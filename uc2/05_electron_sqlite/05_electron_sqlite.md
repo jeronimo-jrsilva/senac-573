@@ -212,6 +212,21 @@ ipcMain.handle('somar-numeros', (event, { a, b }) => {
 
 ---
 
+## 🚀 Setup do Laboratório Prático (Clone & Configuração)
+
+Antes de iniciarmos a prática, vamos preparar o ambiente de desenvolvimento:
+
+1. **Clone do Repositório:** Acesse sua pasta de projetos no Pendrive e rode:
+   ```bash
+   git clone https://github.com/jeronimo-jrsilva/senac-573.git
+   ```
+2. **Copie a pasta de exercícios:** Copie a pasta `exercicios_electron` (dentro de `uc2/05_electron_sqlite/`) para o seu diretório pessoal de trabalho ou projetos no pendrive.
+3. **Caminho Relativo do Electron:** Abra o `package.json` da sua pasta copiada e ajuste o script `"start"` para apontar para o runtime do seu pendrive usando caminhos relativos (evita quebrar quando a letra da unidade mudar):
+   `"start": "..\\..\\..\\..\\electron-win32-x64\\electron.exe ."`
+   *(Adicione mais `..\\` se a pasta do exercício estiver em subpastas mais profundas).*
+
+---
+
 ## 🏓 Prática: Passo 1 (Comunicação IPC)
 
 Vá para a pasta `exercicios_electron` e encontre as marcações:
