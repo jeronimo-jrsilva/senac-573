@@ -1,0 +1,244 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Exercicios - Electron + SQLite (IPC)</title>
+  <style>
+    :root {
+      --bg-color: #0f172a;
+      --card-bg: #1e293b;
+      --text-color: #f8fafc;
+      --primary-color: #38bdf8;
+      --border-color: #334155;
+    }
+
+    body {
+      background-color: var(--bg-color);
+      color: var(--text-color);
+      font-family: system-ui, sans-serif;
+      margin: 0;
+      padding: 20px;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .container {
+      width: 100%;
+      max-width: 750px;
+    }
+
+    header {
+      text-align: center;
+      margin-bottom: 25px;
+      border-bottom: 2px solid var(--border-color);
+      padding-bottom: 15px;
+    }
+
+    h1 {
+      color: var(--primary-color);
+      margin: 0;
+    }
+
+    section {
+      background-color: var(--card-bg);
+      border: 1px solid var(--border-color);
+      border-radius: 8px;
+      padding: 20px;
+      margin-bottom: 20px;
+    }
+
+    h2 {
+      margin-top: 0;
+      color: var(--primary-color);
+      font-size: 1.2rem;
+      border-bottom: 1px solid var(--border-color);
+      padding-bottom: 8px;
+    }
+
+    .row {
+      display: flex;
+      gap: 10px;
+      margin-bottom: 12px;
+      align-items: center;
+    }
+
+    input {
+      background-color: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 4px;
+      padding: 8px 12px;
+      color: var(--text-color);
+      outline: none;
+      flex: 1;
+    }
+
+    button {
+      background-color: var(--primary-color);
+      color: #0f172a;
+      border: none;
+      border-radius: 4px;
+      padding: 8px 16px;
+      font-weight: bold;
+      cursor: pointer;
+    }
+
+    button:hover {
+      opacity: 0.9;
+    }
+
+    .result {
+      background-color: #0f172a;
+      padding: 10px;
+      border-radius: 4px;
+      border: 1px solid var(--border-color);
+      font-family: monospace;
+      margin-top: 10px;
+      min-height: 20px;
+    }
+
+    .contact-card {
+      background-color: #0f172a;
+      border: 1px solid var(--border-color);
+      border-radius: 6px;
+      padding: 12px;
+      margin-top: 10px;
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+    }
+
+    .btn-delete {
+      background-color: #ef4444;
+      color: white;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <header>
+      <h1>Aprendizado IPC & SQLite</h1>
+      <p style="color: #94a3b8; margin: 5px 0 0 0;">Desenvolvimento Desktop Seguro com Electron</p>
+    </header>
+
+    <!-- ========================================== -->
+    <!-- PASSO 1: COMUNICACAO IPC BASICA (SOMA) -->
+    <!-- ========================================== -->
+    <section>
+      <h2>Passo 1: Comunicacao IPC Basica (Soma)</h2>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Enviar dois numeros para o processo Main e receber a soma de volta.</p>
+      
+      <!-- Exemplo Resolvido -->
+      <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 15px;">
+        <strong style="color: #34d399;">Exemplo Pratico (Comprimento do Texto):</strong>
+        <div class="row" style="margin-top: 8px;">
+          <input type="text" id="exemplo-texto" placeholder="Digite uma frase...">
+          <button id="btn-exemplo-tamanho">Ver Tamanho</button>
+        </div>
+        <div id="resultado-exemplo-tamanho" class="result">Tamanho: -</div>
+      </div>
+
+      <!-- Exercicios dos Alunos -->
+      <div>
+        <strong style="color: #f59e0b;">Exercicio 1 (Soma IPC):</strong>
+        <div class="row" style="margin-top: 8px;">
+          <input type="number" id="numA" placeholder="Numero A" style="max-width: 120px;">
+          <span style="font-weight: bold;">+</span>
+          <input type="number" id="numB" placeholder="Numero B" style="max-width: 120px;">
+          <button id="btn-somar">Calcular Soma</button>
+        </div>
+        <div id="resultado-soma" class="result">Resultado: -</div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PASSO 2: CONSULTANDO O SQLITE (.ALL E .GET) -->
+    <!-- ========================================== -->
+    <section>
+      <h2>Passo 2: Consultando o SQLite (.all e .get)</h2>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Aprender a recuperar dados usando queries relacionais seguras.</p>
+      
+      <!-- Exemplo Resolvido -->
+      <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 15px;">
+        <strong style="color: #34d399;">Exemplo Pratico (Listar Todos):</strong>
+        <div style="margin-top: 8px;">
+          <button id="btn-listar-todos">Carregar Todos da Agenda</button>
+        </div>
+        <div id="lista-contatos-completa" style="margin-top: 10px;"></div>
+      </div>
+
+      <!-- Exercicios dos Alunos -->
+      <div>
+        <strong style="color: #f59e0b;">Exercicio 2 (Buscar contato por E-mail):</strong>
+        <div class="row" style="margin-top: 8px;">
+          <input type="email" id="busca-email" placeholder="Digite o e-mail exato do contato...">
+          <button id="btn-buscar-email">Buscar por E-mail</button>
+        </div>
+        <div id="resultado-busca-email" class="result">Contato encontrado: -</div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PASSO 3: GRAVANDO E EXCLUINDO DADOS (.RUN) -->
+    <!-- ========================================== -->
+    <section>
+      <h2>Passo 3: Gravando e Excluindo Dados (.run)</h2>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Inserir novos contatos e implementar exclusao fisica.</p>
+      
+      <!-- Exemplo Resolvido -->
+      <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 15px;">
+        <strong style="color: #34d399;">Exemplo Pratico (Inserir Contato):</strong>
+        <form id="form-exemplo-inserir" style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
+          <input type="text" id="ins-nome" required placeholder="Nome do Contato">
+          <input type="tel" id="ins-telefone" required placeholder="Telefone">
+          <input type="email" id="ins-email" required placeholder="E-mail (Unico)">
+          <button type="submit" style="background-color: #34d399; color: #0f172a;">Cadastrar Contato</button>
+        </form>
+      </div>
+
+      <!-- Exercicios dos Alunos -->
+      <div>
+        <strong style="color: #f59e0b;">Exercicio 3 (Excluir Contato pelo ID):</strong>
+        <div class="row" style="margin-top: 8px;">
+          <input type="number" id="del-id" placeholder="ID do contato para deletar...">
+          <button id="btn-deletar" class="btn-delete">Excluir Registro</button>
+        </div>
+        <div id="resultado-deletar" class="result">Status da exclusao: -</div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PASSO 4: BUSCA DINAMICA (OPERADOR LIKE) -->
+    <!-- ========================================== -->
+    <section>
+      <h2>Passo 4: Busca Dinamica (Operador LIKE)</h2>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Filtrar os contatos por nome em tempo real enquanto digita.</p>
+      <div>
+        <strong style="color: #f59e0b;">Exercicio 4 (Busca Dinamica por Nome):</strong>
+        <div class="row" style="margin-top: 8px;">
+          <input type="text" id="busca-nome" placeholder="Digite parte do nome para filtrar...">
+        </div>
+        <div id="resultado-busca-nome" style="margin-top: 10px;"></div>
+      </div>
+    </section>
+
+    <!-- ========================================== -->
+    <!-- PASSO 5: ESTATISTICAS DO BANCO (COUNT) -->
+    <!-- ========================================== -->
+    <section>
+      <h2>Passo 5: Estatisticas do Banco (COUNT)</h2>
+      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Obter e exibir a contagem total de registros na tabela.</p>
+      <div>
+        <strong style="color: #f59e0b;">Exercicio 5 (Quantidade Total de Contatos):</strong>
+        <div class="row" style="margin-top: 8px;">
+          <span style="font-size: 1.1rem;">Total de Contatos Cadastrados: <strong id="total-contatos" style="color: var(--primary-color);">-</strong></span>
+          <button id="btn-atualizar-total" style="background-color: #34d399; color: #0f172a;">Atualizar Total</button>
+        </div>
+      </div>
+    </section>
+  </div>
+
+  <script src="renderer.js"></script>
+</body>
+</html>

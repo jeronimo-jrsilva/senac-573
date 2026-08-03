@@ -1,0 +1,38 @@
+/* Estilos adicionais para o Mural de Contatos */
+.grid-contatos {
+    display: grid;
+    grid-template-columns: repeat(auto-fill, minmax(300px, 1fr));
+    gap: 1.5rem;
+    margin-top: 1rem;
+}
+
+article {
+    margin-bottom: 0;
+    padding: 1.5rem;
+    border: 1px solid #334155;
+    border-radius: 8px;
+    background-color: #1e293b;
+    color: #f8fafc;
+}
+
+article h3 {
+    margin-top: 0;
+    color: #38bdf8;
+}
+
+article p {
+    margin-bottom: 0.5rem;
+    font-size: 0.9rem;
+}
+
+article button {
+    margin-top: 1rem;
+    padding: 0.5rem 1rem;
+    background-color: #ef4444;
+    border-color: #ef4444;
+}
+
+article button:hover {
+    background-color: #dc2626;
+    border-color: #dc2626;
+}
