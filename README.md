@@ -10,40 +10,31 @@ Este repositório centraliza os slides e exercícios práticos da turma **573 (P
 
 ## 🚀 Como Usar o Laboratório Prático
 
-1. Clone o repositório na sua máquina local ou pendrive:
+As dependências já vêm incluídas no repositório (**não** é preciso rodar `npm install` — o laboratório tem restrições de proxy e de compilação nativa). O único requisito é o Electron portátil na raiz do pendrive.
+
+**Estrutura esperada no pendrive:**
+
+```text
+SEU-PENDRIVE/
+├── electron-win32-x64/          <-- Electron portátil (já entregue em aula)
+└── senac-573/                   <-- clone do repositório
+    └── uc2/05_electron_sqlite/exercicios_electron/
+```
+
+### ⚡ Passo a passo
+
+1. Clone o repositório para a raiz do pendrive:
    ```bash
    git clone https://github.com/jeronimo-jrsilva/senac-573.git
    ```
-2. Para praticar com o Electron + SQLite, acesse a pasta:
+2. Confira se a pasta `electron-win32-x64` está na raiz do pendrive (ao lado da pasta `senac-573`). Se ainda não estiver, copie-a para lá.
+3. Entre na pasta do exercício e **clique duas vezes no `iniciar.bat`** (ou rode no terminal):
    ```bash
    cd senac-573/uc2/05_electron_sqlite/exercicios_electron
+   npm start
    ```
-3. Instale as dependências locais:
-   ```bash
-   npm install
-   ```
-4. **Configuração Portátil (Caso o npm install falhe ou bloqueie):**
-   Como as máquinas do laboratório possuem restrições de proxy, você pode usar a pasta do Electron Portátil (`electron-win32-x64`) presente no seu Pendrive.
-   Como a letra do pendrive (D:, E:, F:) pode mudar ao conectar em portas USB diferentes, **use sempre caminhos relativos** no seu `package.json`.
-   
-   *   **Opção A (Ajuste no package.json - Recomendado para usar `npm start`):**
-       Abra o arquivo `package.json` e altere o script `"start"` usando o caminho relativo que sobe até a raiz do seu pendrive para encontrar a pasta do Electron:
-       ```json
-       "scripts": {
-         "start": "..\\..\\..\\..\\electron-win32-x64\\electron.exe ."
-       }
-       ```
-       *(Nota: Se a sua pasta clonada estiver dentro de uma subpasta como `/projetos/`, adicione mais um nível: `..\\..\\..\\..\\..\\electron-win32-x64\\electron.exe .`)*
-       
-       Depois, basta rodar no terminal do VS Code:
-       ```bash
-       npm start
-       ```
-   *   **Opção B (Linha de comando direta no terminal):**
-       Navegue até a pasta do exercício no terminal e execute o Electron portátil usando caminhos relativos:
-       ```bash
-       ..\..\..\..\electron-win32-x64\electron.exe .
-       ```
+
+> 💡 **Por que funciona em qualquer PC?** Tanto o `iniciar.bat` quanto o `npm start` fazem uma varredura no pendrive: sobem diretórios a partir do repositório (cobrindo o electron na raiz ou em qualquer pasta acima) e, se preciso, uma varredura rasa na raiz do pendrive. Ao encontrar a pasta `electron-win32-x64`, ela fica fixada e o programa abre sempre por ela — a letra da unidade (D:, E:, F:) pode mudar que funciona do mesmo jeito, sem instalar nada no PC do laboratório.
 
 ---
 *Bons estudos!*
