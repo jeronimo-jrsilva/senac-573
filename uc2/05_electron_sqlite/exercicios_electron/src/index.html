@@ -113,13 +113,73 @@
       background-color: #ef4444;
       color: white;
     }
+
+    .subtitle {
+      color: #94a3b8;
+      margin: 5px 0 0 0;
+    }
+
+    .objetivo {
+      font-size: 0.9rem;
+      color: #94a3b8;
+    }
+
+    .exemplo {
+      margin-bottom: 20px;
+      border-bottom: 1px dashed var(--border-color);
+      padding-bottom: 15px;
+    }
+
+    .exemplo-title {
+      color: #34d399;
+    }
+
+    .exercicio-title {
+      color: #f59e0b;
+    }
+
+    .row-top {
+      margin-top: 8px;
+    }
+
+    .input-num {
+      max-width: 120px;
+    }
+
+    .op-sinal {
+      font-weight: bold;
+    }
+
+    .mt10 {
+      margin-top: 10px;
+    }
+
+    .form-inserir {
+      margin-top: 8px;
+      display: flex;
+      flex-direction: column;
+      gap: 8px;
+    }
+
+    .btn-success {
+      background-color: #34d399;
+      color: #0f172a;
+    }
+
+    .total-label {
+      font-size: 1.1rem;
+    }
+
+    .total-valor {
+      color: var(--primary-color);
+    }
   </style>
 </head>
 <body>
   <div class="container">
     <header>
       <h1>Aprendizado IPC & SQLite</h1>
-      <p style="color: #94a3b8; margin: 5px 0 0 0;">Desenvolvimento Desktop Seguro com Electron</p>
+      <p class="subtitle">Desenvolvimento Desktop Seguro com Electron</p>
     </header>
 
     <!-- ========================================== -->
@@ -127,12 +187,12 @@
     <!-- ========================================== -->
     <section>
       <h2>Passo 1: Comunicacao IPC Basica (Soma)</h2>
-      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Enviar dois numeros para o processo Main e receber a soma de volta.</p>
+      <p class="objetivo">Objetivo: Enviar dois numeros para o processo Main e receber a soma de volta.</p>
       
       <!-- Exemplo Resolvido -->
-      <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 15px;">
-        <strong style="color: #34d399;">Exemplo Pratico (Comprimento do Texto):</strong>
-        <div class="row" style="margin-top: 8px;">
+      <div class="exemplo">
+        <strong class="exemplo-title">Exemplo Pratico (Comprimento do Texto):</strong>
+        <div class="row row-top">
           <input type="text" id="exemplo-texto" placeholder="Digite uma frase...">
           <button id="btn-exemplo-tamanho">Ver Tamanho</button>
         </div>
@@ -141,11 +201,11 @@
 
       <!-- Exercicios dos Alunos -->
       <div>
-        <strong style="color: #f59e0b;">Exercicio 1 (Soma IPC):</strong>
-        <div class="row" style="margin-top: 8px;">
-          <input type="number" id="numA" placeholder="Numero A" style="max-width: 120px;">
-          <span style="font-weight: bold;">+</span>
-          <input type="number" id="numB" placeholder="Numero B" style="max-width: 120px;">
+        <strong class="exercicio-title">Exercicio 1 (Soma IPC):</strong>
+        <div class="row row-top">
+          <input type="number" id="numA" placeholder="Numero A" class="input-num">
+          <span class="op-sinal">+</span>
+          <input type="number" id="numB" placeholder="Numero B" class="input-num">
           <button id="btn-somar">Calcular Soma</button>
         </div>
         <div id="resultado-soma" class="result">Resultado: -</div>
@@ -157,21 +217,21 @@
     <!-- ========================================== -->
     <section>
       <h2>Passo 2: Consultando o SQLite (.all e .get)</h2>
-      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Aprender a recuperar dados usando queries relacionais seguras.</p>
+      <p class="objetivo">Objetivo: Aprender a recuperar dados usando queries relacionais seguras.</p>
       
       <!-- Exemplo Resolvido -->
-      <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 15px;">
-        <strong style="color: #34d399;">Exemplo Pratico (Listar Todos):</strong>
-        <div style="margin-top: 8px;">
+      <div class="exemplo">
+        <strong class="exemplo-title">Exemplo Pratico (Listar Todos):</strong>
+        <div class="mt10">
           <button id="btn-listar-todos">Carregar Todos da Agenda</button>
         </div>
-        <div id="lista-contatos-completa" style="margin-top: 10px;"></div>
+        <div id="lista-contatos-completa" class="mt10"></div>
       </div>
 
       <!-- Exercicios dos Alunos -->
       <div>
-        <strong style="color: #f59e0b;">Exercicio 2 (Buscar contato por E-mail):</strong>
-        <div class="row" style="margin-top: 8px;">
+        <strong class="exercicio-title">Exercicio 2 (Buscar contato por E-mail):</strong>
+        <div class="row row-top">
           <input type="email" id="busca-email" placeholder="Digite o e-mail exato do contato...">
           <button id="btn-buscar-email">Buscar por E-mail</button>
         </div>
@@ -184,23 +244,23 @@
     <!-- ========================================== -->
     <section>
       <h2>Passo 3: Gravando e Excluindo Dados (.run)</h2>
-      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Inserir novos contatos e implementar exclusao fisica.</p>
+      <p class="objetivo">Objetivo: Inserir novos contatos e implementar exclusao fisica.</p>
       
       <!-- Exemplo Resolvido -->
-      <div style="margin-bottom: 20px; border-bottom: 1px dashed var(--border-color); padding-bottom: 15px;">
-        <strong style="color: #34d399;">Exemplo Pratico (Inserir Contato):</strong>
-        <form id="form-exemplo-inserir" style="margin-top: 8px; display: flex; flex-direction: column; gap: 8px;">
+      <div class="exemplo">
+        <strong class="exemplo-title">Exemplo Pratico (Inserir Contato):</strong>
+        <form id="form-exemplo-inserir" class="form-inserir">
           <input type="text" id="ins-nome" required placeholder="Nome do Contato">
           <input type="tel" id="ins-telefone" required placeholder="Telefone">
           <input type="email" id="ins-email" required placeholder="E-mail (Unico)">
-          <button type="submit" style="background-color: #34d399; color: #0f172a;">Cadastrar Contato</button>
+          <button type="submit" class="btn-success">Cadastrar Contato</button>
         </form>
       </div>
 
       <!-- Exercicios dos Alunos -->
       <div>
-        <strong style="color: #f59e0b;">Exercicio 3 (Excluir Contato pelo ID):</strong>
-        <div class="row" style="margin-top: 8px;">
+        <strong class="exercicio-title">Exercicio 3 (Excluir Contato pelo ID):</strong>
+        <div class="row row-top">
           <input type="number" id="del-id" placeholder="ID do contato para deletar...">
           <button id="btn-deletar" class="btn-delete">Excluir Registro</button>
         </div>
@@ -213,13 +273,13 @@
     <!-- ========================================== -->
     <section>
       <h2>Passo 4: Busca Dinamica (Operador LIKE)</h2>
-      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Filtrar os contatos por nome em tempo real enquanto digita.</p>
+      <p class="objetivo">Objetivo: Filtrar os contatos por nome em tempo real enquanto digita.</p>
       <div>
-        <strong style="color: #f59e0b;">Exercicio 4 (Busca Dinamica por Nome):</strong>
-        <div class="row" style="margin-top: 8px;">
+        <strong class="exercicio-title">Exercicio 4 (Busca Dinamica por Nome):</strong>
+        <div class="row row-top">
           <input type="text" id="busca-nome" placeholder="Digite parte do nome para filtrar...">
         </div>
-        <div id="resultado-busca-nome" style="margin-top: 10px;"></div>
+        <div id="resultado-busca-nome" class="mt10"></div>
       </div>
     </section>
 
@@ -228,12 +288,12 @@
     <!-- ========================================== -->
     <section>
       <h2>Passo 5: Estatisticas do Banco (COUNT)</h2>
-      <p style="font-size: 0.9rem; color: #94a3b8;">Objetivo: Obter e exibir a contagem total de registros na tabela.</p>
+      <p class="objetivo">Objetivo: Obter e exibir a contagem total de registros na tabela.</p>
       <div>
-        <strong style="color: #f59e0b;">Exercicio 5 (Quantidade Total de Contatos):</strong>
-        <div class="row" style="margin-top: 8px;">
-          <span style="font-size: 1.1rem;">Total de Contatos Cadastrados: <strong id="total-contatos" style="color: var(--primary-color);">-</strong></span>
-          <button id="btn-atualizar-total" style="background-color: #34d399; color: #0f172a;">Atualizar Total</button>
+        <strong class="exercicio-title">Exercicio 5 (Quantidade Total de Contatos):</strong>
+        <div class="row row-top">
+          <span class="total-label">Total de Contatos Cadastrados: <strong id="total-contatos" class="total-valor">-</strong></span>
+          <button id="btn-atualizar-total" class="btn-success">Atualizar Total</button>
         </div>
       </div>
     </section>
