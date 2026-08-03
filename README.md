@@ -24,21 +24,25 @@ Este repositório centraliza os slides e exercícios práticos da turma **573 (P
    ```
 4. **Configuração Portátil (Caso o npm install falhe ou bloqueie):**
    Como as máquinas do laboratório possuem restrições de proxy, você pode usar a pasta do Electron Portátil (`electron-win32-x64`) presente no seu Pendrive.
+   Como a letra do pendrive (D:, E:, F:) pode mudar ao conectar em portas USB diferentes, **use sempre caminhos relativos** no seu `package.json`.
+   
    *   **Opção A (Ajuste no package.json - Recomendado para usar `npm start`):**
-       Abra o arquivo `package.json` e altere a linha do script `"start"` para apontar para o caminho completo do seu `electron.exe` no pendrive (substitua `D:\` pela letra correta do seu pendrive):
+       Abra o arquivo `package.json` e altere o script `"start"` usando o caminho relativo que sobe até a raiz do seu pendrive para encontrar a pasta do Electron:
        ```json
        "scripts": {
-         "start": "D:\\electron-win32-x64\\electron.exe ."
+         "start": "..\\..\\..\\..\\electron-win32-x64\\electron.exe ."
        }
        ```
+       *(Nota: Se a sua pasta clonada estiver dentro de uma subpasta como `/projetos/`, adicione mais um nível: `..\\..\\..\\..\\..\\electron-win32-x64\\electron.exe .`)*
+       
        Depois, basta rodar no terminal do VS Code:
        ```bash
        npm start
        ```
    *   **Opção B (Linha de comando direta no terminal):**
-       Execute o Electron diretamente passando o caminho do executável e apontando para a pasta atual (`.`):
+       Navegue até a pasta do exercício no terminal e execute o Electron portátil usando caminhos relativos:
        ```bash
-       D:\electron-win32-x64\electron.exe .
+       ..\..\..\..\electron-win32-x64\electron.exe .
        ```
 
 ---
