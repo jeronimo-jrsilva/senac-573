@@ -65,6 +65,9 @@ ipcMain.handle('exemplo-inserir', (event, nome, telefone, email) => {
   try {
     const stmt = db.prepare('INSERT INTO contatos (nome, telefone, email) VALUES (?, ?, ?)');
     const result = stmt.run(nome, telefone, email);
+    
+    // 'result.lastInsertRowid' é uma propriedade do SQLite que retorna o ID (número inteiro)
+    // gerado automaticamente para o novo registro que acabou de ser inserido.
     return result.lastInsertRowid;
   } catch (error) {
     console.error('Erro ao inserir contato:', error.message);
@@ -77,6 +80,7 @@ ipcMain.handle('exemplo-inserir', (event, nome, telefone, email) => {
 // 1. Defina o listener para o canal 'deletar-contato'.
 // 2. Prepare e execute a query 'DELETE FROM contatos WHERE id = ?' usando '.run(id)'.
 // 3. Retorne a quantidade de linhas alteradas (result.changes) para o renderer validar a exclusao.
+// (Dica: 'result.changes' retorna a quantidade de linhas deletadas. Se for maior que 0, a exclusão deu certo).
 
 
 
