@@ -40,9 +40,10 @@ ipcMain.handle('somar-numeros', (event, { a, b }) => {
 ipcMain.handle('exemplo-listar-todos', () => {
   try {
     const stmt = db.prepare('SELECT * FROM contatos ORDER BY nome ASC');
-    return { success: true, data: stmt.all() };
+    return stmt.all();
   } catch (error) {
-    return { success: false, error: error.message };
+    console.error('Erro ao listar contatos:', error.message);
+    return [];
   }
 });
 
@@ -50,7 +51,7 @@ ipcMain.handle('exemplo-listar-todos', () => {
 // ESCREVA AQUI:
 // 1. Defina o listener 'ipcMain.handle' para o canal 'buscar-por-email'.
 // 2. Prepare e execute uma query SQL usando '.get(email)' para buscar um unico contato.
-// 3. Retorne um objeto { success: true, data: contato } ou captures erros no catch.
+// 3. Retorne o contato encontrado (ou null se nao encontrar) ou capture erros no catch.
 // (Dica: Use try/catch para manter a estabilidade do processo).
 
 
@@ -60,13 +61,14 @@ ipcMain.handle('exemplo-listar-todos', () => {
 // ==========================================
 
 // Exemplo: Inserir novo contato
-ipcMain.handle('exemplo-inserir', (event, { nome, telefone, email }) => {
+ipcMain.handle('exemplo-inserir', (event, nome, telefone, email) => {
   try {
     const stmt = db.prepare('INSERT INTO contatos (nome, telefone, email) VALUES (?, ?, ?)');
     const result = stmt.run(nome, telefone, email);
-    return { success: true, id: result.lastInsertRowid };
+    return result.lastInsertRowid;
   } catch (error) {
-    return { success: false, error: error.message };
+    console.error('Erro ao inserir contato:', error.message);
+    return null;
   }
 });
 
@@ -74,7 +76,7 @@ ipcMain.handle('exemplo-inserir', (event, { nome, telefone, email }) => {
 // ESCREVA AQUI:
 // 1. Defina o listener para o canal 'deletar-contato'.
 // 2. Prepare e execute a query 'DELETE FROM contatos WHERE id = ?' usando '.run(id)'.
-// 3. Retorne { success: true, changes: result.changes } para o renderer validar a exclusao.
+// 3. Retorne a quantidade de linhas alteradas (result.changes) para o renderer validar a exclusao.
 
 
 
@@ -98,7 +100,7 @@ ipcMain.handle('exemplo-inserir', (event, { nome, telefone, email }) => {
 // ESCREVA AQUI:
 // 1. Defina o listener para o canal 'obter-total-contatos'.
 // 2. Execute 'SELECT COUNT(*) as total FROM contatos' usando '.get()'.
-// 3. Retorne { success: true, total: resultado.total }.
+// 3. Retorne a contagem total obtida (resultado.total).
 
 
 

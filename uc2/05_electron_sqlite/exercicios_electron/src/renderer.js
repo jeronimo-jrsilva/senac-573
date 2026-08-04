@@ -57,18 +57,15 @@ btnListarTodos.addEventListener('click', async () => {
   // 2. O Preload envia a mensagem pelo canal correspondente para o MAIN.JS
   // 3. O MAIN.JS importa a conexao do SQLite, executa o comando SQL 'SELECT' com o metodo '.all()'
   // 4. O MAIN.JS envia de volta um objeto { success, data } contendo a lista de contatos do banco
-  const response = await window.api.exemploListarTodos();
-  if (response.success) {
-    divListaContatos.innerHTML = '';
-    response.data.forEach(c => {
-      divListaContatos.innerHTML += `
-        <div class="contact-card">
-          <span><strong>ID: ${c.id}</strong> - ${c.nome} (${c.email})</span>
-        </div>
-      `;
-    });
-  } else {
-    alert('Erro ao carregar: ' + response.error);
+  const contatos = await window.api.exemploListarTodos();
+  divListaContatos.innerHTML = '';
+  for (let i = 0; i < contatos.length; i++) {
+    const c = contatos[i];
+    divListaContatos.innerHTML += `
+      <div class="contact-card">
+        <span><strong>ID: ${c.id}</strong> - ${c.nome} (${c.email})</span>
+      </div>
+    `;
   }
 });
 
@@ -102,17 +99,16 @@ formInserir.addEventListener('submit', async (e) => {
   const telefone = document.getElementById('ins-telefone').value.trim();
   const email = document.getElementById('ins-email').value.trim();
 
-  // JORNADA DA ALTERACAO NO BANCO (INSERT):
-  // 1. Envia os dados encapsulados para 'window.api.exemploInserir()' (Preload.js)
+  // 1. Envia os dados para 'window.api.exemploInserir()' (Preload.js)
   // 2. O Preload executa o invoke que joga os dados no Main Process (main.js)
   // 3. O main.js executa o SQL 'INSERT' de forma segura com placeholders '?' e o metodo '.run()'
   // 4. O bloco 'try/catch' no main.js impede travamentos caso o e-mail inserido ja exista (UNIQUE)
-  const response = await window.api.exemploInserir({ nome, telefone, email });
-  if (response.success) {
-    alert(`Contato cadastrado com sucesso! ID: ${response.id}`);
+  const novoId = await window.api.exemploInserir(nome, telefone, email);
+  if (novoId) {
+    alert(`Contato cadastrado com sucesso! ID: ${novoId}`);
     formInserir.reset();
   } else {
-    alert('Erro ao cadastrar: ' + response.error);
+    alert('Erro ao cadastrar: verifique se o e-mail ja existe.');
   }
 });
 

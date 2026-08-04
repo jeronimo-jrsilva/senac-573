@@ -32,7 +32,7 @@ contextBridge.exposeInMainWorld('api', {
   // ==========================================
   
   // Exemplo: Inserir novo contato
-  exemploInserir: (contato) => ipcRenderer.invoke('exemplo-inserir', contato),
+  exemploInserir: (nome, telefone, email) => ipcRenderer.invoke('exemplo-inserir', nome, telefone, email),
   
   // Exercício 3: Deletar contato por ID
   // ESCREVA AQUI: Exponha a funcao 'deletarContato(id)' invocando o canal 'deletar-contato'
