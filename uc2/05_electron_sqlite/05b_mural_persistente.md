@@ -64,19 +64,6 @@ style: |
     font-size: 34px;
     letter-spacing: -1px;
   }
-  pre {
-    background-color: #1e293b !important;
-    border: 1px solid #334155 !important;
-    padding: 10px;
-    border-radius: 8px;
-    text-align: left;
-  }
-  pre code {
-    color: #38bdf8 !important;
-    font-family: 'JetBrains Mono', monospace;
-    font-size: 16px;
-    background-color: transparent !important;
-  }
   ul, ol {
     text-align: left;
     font-size: 22px;
@@ -106,11 +93,11 @@ style: |
 
 ## 📋 Checklist de Conceitos da Aula
 
-- **IPC (`ipcRenderer.invoke` / `ipcMain.handle`)**: Comunicação assíncrona bidirecional segura.
-- **`better-sqlite3` (`prepare`, `.all()`, `.run()`)**: Execução síncrona e de alta performance no Node.js.
+- **IPC (`invoke` / `handle`)**: Comunicação assíncrona bidirecional segura entre processos.
+- **`better-sqlite3`**: Execução síncrona e performática de queries no Node.js.
 - **`AUTOINCREMENT`**: Geração automática de ID numérico sequencial único no banco.
 - **`UNIQUE`**: Restrição SQL que previne cadastros duplicados (ex: e-mail).
-- **Sanitização com Regex (`replace(/\D/g, '')`)**: Remoção de caracteres não numéricos.
+- **Sanitização com Regex**: Remoção de caracteres não numéricos.
 - **`confirm()`**: Modal nativo do navegador para validação prévia de exclusão.
 
 ---
@@ -148,57 +135,42 @@ style: |
 
 ## 🗄️ Modelagem da Tabela `contatos`
 
-```sql
-CREATE TABLE IF NOT EXISTS contatos (
-  id INTEGER PRIMARY KEY AUTOINCREMENT,
-  nome TEXT NOT NULL,
-  foto_url TEXT,
-  telefone TEXT NOT NULL,
-  email TEXT UNIQUE NOT NULL
-);
-```
+Nossa tabela no banco de dados possuirá as seguintes colunas:
 
-- **`id`**: Garantia de exclusão e atualização sem ambiguidade.
-- **`foto_url`**: Armazena a URL da imagem para exibição no card.
-- **`email UNIQUE`**: Retorna erro amigável se tentar cadastrar e-mail duplicado.
+- **`id`**: Chave primária de tipo número inteiro com auto-incremento.
+- **`nome`**: Texto obrigatório.
+- **`foto_url`**: Texto para armazenar a URL da imagem de perfil.
+- **`telefone`**: Texto obrigatório sanitizado.
+- **`email`**: Texto único e obrigatório.
 
 ---
 
 ## 🔌 Mapeamento dos Canais IPC
 
-| Canal | Método SQL | Descrição |
+| Canal | Método | Descrição |
 | :--- | :--- | :--- |
-| **`get-contatos`** | `.prepare(...).all()` | Retorna todos os contatos por ordem alfabética (`ORDER BY nome ASC`). |
-| **`add-contato`** | `.prepare(...).run(...)` | Insere novo contato no banco `{ nome, foto_url, telefone, email }`. |
-| **`delete-contato`** | `.prepare(...).run(id)` | Exclui fisicamente o contato pelo `id`. |
+| **`get-contatos`** | Consulta (Leitura) | Retorna a lista de todos os contatos por ordem de nome. |
+| **`add-contato`** | Inserção (Escrita) | Grava um novo contato no banco de dados. |
+| **`delete-contato`** | Exclusão (Remoção) | Remove um contato fisicamente do banco pelo seu ID. |
 
 ---
 
 ## 🧹 Sanitização com Regex & Confirmação
 
-### 1. Limpeza do Telefone com Expressão Regular (Regex):
-```javascript
-const telLimpo = inputTelefone.value.replace(/\D/g, '');
-// Exemplo: "(81) 99999-8888" -> "81999998888"
-```
-- `\D`: Seleciona qualquer caractere que **NÃO seja dígito numérico**.
-- `/g`: Flag global para substituir todas as ocorrências.
+### 1. Limpeza de Telefone (Regex):
+- A expressão `replace(/\D/g, '')` remove tudo que **não for número** do campo digitado.
 
 ### 2. Confirmação Visual Pré-Deleção:
-```javascript
-if (confirm(`Deseja realmente excluir o contato ${nome}?`)) {
-  await window.api.deleteContato(id);
-}
-```
+- Uso do método nativo `confirm(...)` para solicitar confirmação do usuário antes de disparar a rota de exclusão no IPC.
 
 ---
 
 ## 🛠️ Roteiro da Prática Guiada (Code-Along)
 
-1. **Passo 1 (`conexao.js`):** Configurar o `better-sqlite3` e executar a DDL `CREATE TABLE`.
-2. **Passo 2 (`main.js`):** Registrar os 3 handlers `ipcMain.handle` com tratamento de erro.
-3. **Passo 3 (`preload.js`):** Expor as funções em `window.api`.
-4. **Passo 4 (`renderer.js`):** Conectar os formulários e botões de exclusão, executando `atualizarMural()`.
+1. **Passo 1 (`conexao.js`):** Configurar a conexão do `better-sqlite3` e criar a tabela `contatos`.
+2. **Passo 2 (`main.js`):** Registrar os 3 handlers IPC (`get-contatos`, `add-contato`, `delete-contato`).
+3. **Passo 3 (`preload.js`):** Expor a ponte de contexto segura em `window.api`.
+4. **Passo 4 (`renderer.js`):** Conectar os formulários do DOM e implementar a renderização e exclusão.
 
 ---
 
@@ -206,8 +178,8 @@ if (confirm(`Deseja realmente excluir o contato ${nome}?`)) {
 ## 🎯 Desafio Prático & Próximos Passos
 
 ### 🧪 Desafio da Aula (Mural Avançado):
-1. **Filtro em Tempo Real (LIKE):** Adicione um campo `<input id="busca">` e crie a rota `search-contatos` (`WHERE nome LIKE ?`).
-2. **Validação de E-mail:** Trate o erro de e-mail duplicado exibindo uma mensagem amigável ao usuário.
+1. **Filtro em Tempo Real (LIKE):** Crie a busca em tempo real conforme o usuário digita.
+2. **Validação de E-mail:** Trate erros de e-mail duplicado exibindo aviso amigável.
 
 ### ➡️ Próxima Aula:
-- **Tópico 06:** Desafio Kanban Persistente (Arrastar e soltar com persistência de status no SQLite).
+- **Tópico 06:** Desafio Kanban Persistente (Arrastar e soltar com status no SQLite).
