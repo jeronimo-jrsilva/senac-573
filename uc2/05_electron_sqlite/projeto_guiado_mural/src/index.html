@@ -1,0 +1,70 @@
+<!DOCTYPE html>
+<html lang="pt-BR">
+<head>
+  <meta charset="UTF-8">
+  <title>Mural de Contatos Persistente 📞</title>
+  <link rel="stylesheet" href="pico.min.css">
+  <style>
+    body {
+      padding-top: 30px;
+    }
+    .container-mural {
+      max-width: 800px;
+      margin: 0 auto;
+    }
+    .card-contato {
+      position: relative;
+    }
+    .btn-deletar {
+      position: absolute;
+      top: 10px;
+      right: 10px;
+      background-color: rgba(239, 68, 68, 0.9);
+      border: none;
+      color: white;
+      border-radius: 50%;
+      width: 32px;
+      height: 32px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      cursor: pointer;
+      font-size: 0.9rem;
+      padding: 0;
+    }
+    .btn-deletar:hover {
+      background-color: #ef4444;
+    }
+  </style>
+</head>
+<body class="container">
+  <main class="container-mural">
+    <header style="text-align: center; margin-bottom: 25px;">
+      <h1>Mural de Contatos Persistente 📞</h1>
+      <p style="color: #64748b;">Agenda Desktop conectada ao SQLite</p>
+    </header>
+
+    <form id="form-contato" style="background-color: #f8fafc; padding: 20px; border-radius: 8px; border: 1px solid #e2e8f0; margin-bottom: 30px;">
+      <div class="grid">
+        <input type="text" id="nome" placeholder="Nome Completo" required>
+        <input type="email" id="email" placeholder="E-mail (Único)" required>
+      </div>
+      <div class="grid">
+        <input type="url" id="foto-url" placeholder="Link da Foto (URL)" required>
+        <input type="tel" id="telefone" placeholder="Telefone (WhatsApp)" required>
+      </div>
+      <button type="submit" style="margin-bottom: 0;">Cadastrar Contato</button>
+    </form>
+
+    <hr>
+
+    <h2>Contatos Salvos:</h2>
+    <!-- Contêiner que receberá os cards dinâmicos -->
+    <div id="mural-contatos" style="display: grid; grid-template-columns: 1fr 1fr; gap: 20px;">
+      <!-- Cards serão injetados aqui -->
+    </div>
+  </main>
+
+  <script src="renderer.js"></script>
+</body>
+</html>
