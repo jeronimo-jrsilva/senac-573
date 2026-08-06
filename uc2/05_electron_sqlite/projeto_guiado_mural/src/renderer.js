@@ -28,21 +28,16 @@ async function atualizarMural() {
 
   const contatos = response.data;
 
-  // C) Percorrer os contatos obtidos e desenhar os cards usando o template Pico CSS
+  // C) Percorrer os contatos obtidos e desenhar os cards dinâmicos
   contatos.forEach(c => {
-    // Monte o HTML do card de contato utilizando a tag <article> do Pico CSS
+    // Monte o HTML do card de contato usando a tag <article>
     // Nota: Cada card de contato deve possuir um botão para excluir contendo o ID dele.
     const card = document.createElement('article');
-    card.className = 'card-contato';
-    
+
     // Imagem do Contato
     const img = document.createElement('img');
     img.src = c.foto_url || 'https://via.placeholder.com/150';
     img.alt = 'Foto de ' + c.nome;
-    img.style.height = '150px';
-    img.style.width = '100%';
-    img.style.objectFit = 'cover';
-    img.style.borderRadius = '4px';
     card.appendChild(img);
 
     // Título do Nome
@@ -52,8 +47,6 @@ async function atualizarMural() {
 
     // Detalhe do Email
     const pEmail = document.createElement('p');
-    pEmail.style.fontSize = '0.9rem';
-    pEmail.style.color = '#64748b';
     pEmail.textContent = c.email;
     card.appendChild(pEmail);
 
@@ -61,14 +54,11 @@ async function atualizarMural() {
     const btnWhats = document.createElement('a');
     btnWhats.href = `https://wa.me/55${c.telefone.replace(/\D/g, '')}`;
     btnWhats.target = '_blank';
-    btnWhats.role = 'button';
-    btnWhats.className = 'contrast';
     btnWhats.textContent = 'Conversar no WhatsApp';
     card.appendChild(btnWhats);
 
-    // Botão de Excluir Contato (Posicionado absolutamente por CSS)
+    // Botão de Excluir Contato
     const btnDeletar = document.createElement('button');
-    btnDeletar.className = 'btn-deletar';
     btnDeletar.innerHTML = '✕';
     btnDeletar.addEventListener('click', async () => {
       // ESCREVA AQUI: Chamar a exclusão física do contato por ID
