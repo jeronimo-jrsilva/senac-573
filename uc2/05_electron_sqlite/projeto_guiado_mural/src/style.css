@@ -1,0 +1,14 @@
+/* Layout do Grid de Cards */
+#mural-contatos {
+  display: grid;
+  grid-template-columns: repeat(auto-fill, minmax(200px, 1fr));
+  gap: 1.5rem;
+}
+
+/* Fotos dos contatos */
+#mural-contatos article img {
+  width: 100%;
+  height: 150px;
+  object-fit: cover;
+  border-radius: 8px;
+}
